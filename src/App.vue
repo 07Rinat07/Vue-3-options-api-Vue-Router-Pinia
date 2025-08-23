@@ -3,6 +3,9 @@
     <div>Name: {{ person.name }}</div>
     <div>Age: {{ person.age }}</div>
   </div>
+  <div>
+    <span>Click</span>
+  </div>
 </template>
 
 <script>
@@ -15,6 +18,11 @@ export default {
         name: 'John Doe',
         age: 30,
       }
+    }
+  },
+  methods: {
+    sayOne() {
+     console.log(11111111111111122222222222222)
     }
   }
 }
