@@ -1,11 +1,12 @@
 <template>
   <div class="w-1/2 mx-auto p-4">
-    <div>Name: {{ person.name }}</div>
-    <div>Age: {{ person.age }}</div>
+      <div>Name: {{ person.name }}</div>
+      <div>Age: {{ person.age }}</div>
+    <div>
+      <span @click="sayOne(222222)">Click</span>
+    </div>
   </div>
-  <div>
-    <span>Click</span>
-  </div>
+
 </template>
 
 <script>
@@ -21,8 +22,8 @@ export default {
     }
   },
   methods: {
-    sayOne() {
-     console.log(11111111111111122222222222222)
+    sayOne(num) {
+     console.log(num)
     }
   }
 }
