@@ -20,14 +20,15 @@ export default {
 
   data() {
     return {
-      post:{}
+      post:{},
+      posts:[]
     }
   },
   methods: {
    storePost() {
-    console.log(this.post);
-
-   }
+    this.posts.unshift(this.post)
+    this.post = {}
+     }
   }
 }
 </script>
