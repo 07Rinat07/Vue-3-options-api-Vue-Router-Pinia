@@ -15,7 +15,9 @@
             <textarea v-model="editedPost.content" placeholder="content" class="border border-gray-200 p-4 w-full"></textarea>
           </div>
           <div>
-            <a href="#" class="inline-block px-3 py-2 bg-sky-600 border border-sky-700 text-white">Save post</a>
+            <a @click.prevent="updatePost"
+             href="#"
+            class="inline-block px-3 py-2 bg-sky-600 border border-sky-700 text-white">Update Post </a>
           </div>
         </div>
       </div>
@@ -35,7 +37,7 @@
         <input type="text" v-model="post.title" placeholder="title" class="border border-gray-200 p-4 w-full">
       </div>
       <div class="mb-4">
-         <textarea v-model="post.content" placeholder="content" class="border border-gray-200 p-4 w-full"></textarea>
+         <textarea @keyup.ctrl.enter="storePost" v-model="post.content" placeholder="content" class="border border-gray-200 p-4 w-full"></textarea>
       </div>
       <div>
         <a @click.prevent="storePost" href="#" class="inline-block px-3 py-2 bg-sky-600 border border-sky-700 text-white">ADD POST</a>
@@ -53,7 +55,7 @@
             {{ postItem.content }}
           </div>
           <div class="flex items-center">
-          <svg @click="editedPost=postItem" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2 text-emerald-600 cursor-pointer">
+          <svg @click="editPost(postItem)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2 text-emerald-600 cursor-pointer">
           <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
           </svg>
 
@@ -78,15 +80,27 @@ export default {
     }
   },
   methods: {
-   storePost() {
-    this.posts.unshift(this.post)
-    this.post = {}
+     storePost() {
+      this.posts.unshift(this.post)
+      this.post = {}
      },
      deletePost(postItem){
       const index = this.posts.indexOf(postItem)
       this.posts.splice(index,1)
+     },
+     editPost(postItem) {
+      this.editedPost.index = this.posts.indexOf(postItem)
+      this.editedPost.title = postItem.title
+      this.editedPost.content = postItem.content
+     },
+     updatePost() {
+      const post = this.posts[this.editedPost.index]
+      post.title = this.editedPost.title
+      post.content = this.editedPost.content
+      this.editedPost = {}
      }
-  }
+  },
+
 }
 </script>
 
