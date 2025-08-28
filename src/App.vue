@@ -39,6 +39,11 @@
       <div class="mb-4">
          <textarea @keyup.ctrl.enter="storePost" v-model="post.content" placeholder="content" class="border border-gray-200 p-4 w-full"></textarea>
       </div>
+
+      <div v-if="this.errors.length > 0">
+        <div v-for="error in errors" class="mb-4 text-red-600">{{ error }}</div>
+      </div>
+
       <div>
         <a @click.prevent="storePost" href="#" class="inline-block px-3 py-2 bg-sky-600 border border-sky-700 text-white">ADD POST</a>
       </div>
@@ -77,10 +82,13 @@ export default {
       post:{},
       posts:[],
       editedPost:{},
+      errors: [],
     }
   },
+
   methods: {
      storePost() {
+      if (!this.isValidated()) return
       this.posts.unshift(this.post)
       this.post = {}
      },
@@ -98,10 +106,19 @@ export default {
       post.title = this.editedPost.title
       post.content = this.editedPost.content
       this.editedPost = {}
-     }
+     },
+     isValidated(){
+        if (!this.post.title){
+          this.errors.push('Title field is required')
+        }
+        if (!this.post.content){
+          this.errors.push('Content field is required')
+        }
+        return this.errors.length < 1
+     },
   },
-
 }
+
 </script>
 
 <style>
