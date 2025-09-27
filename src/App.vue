@@ -14,12 +14,14 @@
           <div class="mb-4">
             <textarea v-model="editedPost.content" placeholder="content" class="border border-gray-200 p-4 w-full"></textarea>
           </div>
+
           <div>
             <a @click.prevent="updatePost"
              href="#"
             class="inline-block px-3 py-2 bg-sky-600 border border-sky-700 text-white">Update Post </a>
           </div>
         </div>
+
       </div>
 
 
@@ -34,10 +36,10 @@
   <div class="w-1/2 mx-auto p-4">
     <div class="p-4 mb-4 bg-white border border-gray-200">
       <div class=mb-4>
-        <input type="text" v-model="post.title" placeholder="title" class="border border-gray-200 p-4 w-full">
+        <input type="text" v-model.trim="post.title" placeholder="title" class="border border-gray-200 p-4 w-full">
       </div>
       <div class="mb-4">
-         <textarea @keyup.ctrl.enter="storePost" v-model="post.content" placeholder="content" class="border border-gray-200 p-4 w-full"></textarea>
+         <textarea @keyup.ctrl.enter="storePost" v-model.trim="post.content" placeholder="content" class="border border-gray-200 p-4 w-full"></textarea>
       </div>
 
       <div v-if="this.errors.length > 0">
@@ -83,12 +85,15 @@ export default {
       posts:[],
       editedPost:{},
       errors: [],
+
     }
   },
 
   methods: {
+
      storePost() {
-      if (!this.isValidated()) return
+
+     if (!this.isValidated()) return
       this.posts.unshift(this.post)
       this.post = {}
      },
@@ -108,6 +113,7 @@ export default {
       this.editedPost = {}
      },
      isValidated(){
+      this.errors = []
         if (!this.post.title){
           this.errors.push('Title field is required')
         }
@@ -115,8 +121,18 @@ export default {
           this.errors.push('Content field is required')
         }
         return this.errors.length < 1
-     },
+     }
   },
+
+  watch: {
+    post:{
+      handler(new_val, old_val){
+        this.errors = []
+      },
+      deep: true
+    }
+  }
+
 }
 
 </script>
