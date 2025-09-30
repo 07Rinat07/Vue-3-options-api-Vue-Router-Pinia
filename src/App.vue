@@ -85,6 +85,10 @@ export default {
       posts:[],
       editedPost:{},
       errors: [],
+      validateField: [
+        'title',
+        'content'
+      ]
 
     }
   },
@@ -114,13 +118,14 @@ export default {
      },
      isValidated(){
       this.errors = []
-        if (!this.post.title){
-          this.errors.push('Title field is required')
+
+      this.validateField.forEach(field => {
+        if (!this.post[field]){
+          this.errors.push(`${field} field is required`)
         }
-        if (!this.post.content){
-          this.errors.push('Content field is required')
-        }
-        return this.errors.length < 1
+      })
+
+       return this.errors.length < 1
      }
   },
 
